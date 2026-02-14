@@ -29,7 +29,7 @@ function render() {
                   (item) => `
             <div class="grocery-item">
               <span>${item.name}</span>
-              <button onclick="deleteItem(${item.id})" class="delete-btn">Delete</button>
+              <button data-id="${item.id}" class="delete-btn">Delete</button>
             </div>
           `
                 )
@@ -38,9 +38,6 @@ function render() {
       </div>
     </div>
   `;
-
-  const form = document.getElementById("grocery-form");
-  form.addEventListener("submit", handleSubmit);
 }
 
 function handleSubmit(e) {
@@ -63,9 +60,21 @@ function handleSubmit(e) {
   }
 }
 
-function deleteItem(id) {
-  items = items.filter((item) => item.id !== id);
+function handleDeleteClick(event) {
+  const button = event.target.closest(".delete-btn");
+  if (!button) {
+    return;
+  }
+
+  const itemId = Number(button.dataset.id);
+  if (Number.isNaN(itemId)) {
+    return;
+  }
+
+  items = items.filter((item) => item.id !== itemId);
   render();
 }
 
 render();
+app.addEventListener("submit", handleSubmit);
+app.addEventListener("click", handleDeleteClick);

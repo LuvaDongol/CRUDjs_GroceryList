@@ -1,6 +1,8 @@
+import { saveItems, loadItems } from "./storage.js";
+
 const app = document.getElementById("app");
 
-let items = [];
+let items = loadItems();
 
 function render() {
   app.innerHTML = `
@@ -62,6 +64,7 @@ function handleSubmit(e) {
     };
 
     items.push(newItem);
+    saveItems(items);
 
     input.value = "";
 
@@ -81,6 +84,7 @@ function handleDeleteClick(event) {
   }
 
   items = items.filter((item) => item.id !== itemId);
+  saveItems(items);
   render();
 }
 
@@ -98,6 +102,7 @@ function handleToggleChange(event) {
   items = items.map((item) =>
     item.id === itemId ? { ...item, completed: checkbox.checked } : item
   );
+  saveItems(items);
   render();
 }
 

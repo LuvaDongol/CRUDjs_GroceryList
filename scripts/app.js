@@ -27,8 +27,16 @@ function render() {
             : items
                 .map(
                   (item) => `
-            <div class="grocery-item">
-              <span>${item.name}</span>
+            <div class="grocery-item ${item.completed ? "completed" : ""}">
+              <label class="item-label">
+                <input
+                  type="checkbox"
+                  class="complete-checkbox"
+                  data-id="${item.id}"
+                  ${item.completed ? "checked" : ""}
+                />
+                <span>${item.name}</span>
+              </label>
               <button data-id="${item.id}" class="delete-btn">Delete</button>
             </div>
           `
@@ -50,6 +58,7 @@ function handleSubmit(e) {
     const newItem = {
       id: Date.now(),
       name: itemName,
+      completed: false,
     };
 
     items.push(newItem);
@@ -75,6 +84,24 @@ function handleDeleteClick(event) {
   render();
 }
 
+function handleToggleChange(event) {
+  const checkbox = event.target.closest(".complete-checkbox");
+  if (!checkbox) {
+    return;
+  }
+
+  const itemId = Number(checkbox.dataset.id);
+  if (Number.isNaN(itemId)) {
+    return;
+  }
+
+  items = items.map((item) =>
+    item.id === itemId ? { ...item, completed: checkbox.checked } : item
+  );
+  render();
+}
+
 render();
 app.addEventListener("submit", handleSubmit);
 app.addEventListener("click", handleDeleteClick);
+app.addEventListener("change", handleToggleChange);

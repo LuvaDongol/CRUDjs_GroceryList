@@ -27,6 +27,7 @@ function render() {
           items.length === 0
             ? '<p style="text-align: center; color: #999;">No items yet. Add your first item!</p>'
             : items
+                .sort((a, b) => a.completed - b.completed)
                 .map(
                   (item) => `
             <div class="grocery-item ${item.completed ? "completed" : ""}">

@@ -61,6 +61,12 @@
   margin-top: 16px;
 }
 
+.actions {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 16px;
+}
+
 .grocery-item {
   display: flex;
   justify-content: space-between;
@@ -111,4 +117,25 @@
 
 .delete-btn:hover {
   background: #dc2626;
+}
+
+.delete-all-btn {
+  padding: 10px 18px;
+  background: #f59e0b;
+  color: #1f2937;
+  border: none;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.delete-all-btn:hover {
+  background: #d97706;
+}
+
+.delete-all-btn:disabled {
+  background: #e5e7eb;
+  color: #9ca3af;
+  cursor: not-allowed;
 }

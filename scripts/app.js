@@ -21,7 +21,7 @@ function render() {
           Add Item
         </button>
       </form>
-      
+
       <div id="item-list" class="grocery-list">
         ${
           items.length === 0
@@ -46,6 +46,14 @@ function render() {
                 )
                 .join("")
         }
+      </div>
+
+      <div class="actions">
+        <button type="button" class="delete-all-btn" ${
+          items.length === 0 ? "disabled" : ""
+        }>
+          Delete All
+        </button>
       </div>
     </div>
   `;
@@ -89,6 +97,17 @@ function handleDeleteClick(event) {
   render();
 }
 
+function handleDeleteAllClick(event) {
+  const button = event.target.closest(".delete-all-btn");
+  if (!button || button.disabled) {
+    return;
+  }
+
+  items = [];
+  saveItems(items);
+  render();
+}
+
 function handleToggleChange(event) {
   const checkbox = event.target.closest(".complete-checkbox");
   if (!checkbox) {
@@ -110,4 +129,5 @@ function handleToggleChange(event) {
 render();
 app.addEventListener("submit", handleSubmit);
 app.addEventListener("click", handleDeleteClick);
+app.addEventListener("click", handleDeleteAllClick);
 app.addEventListener("change", handleToggleChange);

@@ -40,7 +40,10 @@ function render() {
                 />
                 <span>${item.name}</span>
               </label>
-              <button data-id="${item.id}" class="delete-btn">Delete</button>
+              <div class="item-actions">
+                <button data-id="${item.id}" class="edit-btn">Edit</button>
+                <button data-id="${item.id}" class="delete-btn">Delete</button>
+              </div>
             </div>
           `
                 )
@@ -108,6 +111,39 @@ function handleDeleteAllClick(event) {
   render();
 }
 
+function handleEditClick(event) {
+  const button = event.target.closest(".edit-btn");
+  if (!button) {
+    return;
+  }
+
+  const itemId = Number(button.dataset.id);
+  if (Number.isNaN(itemId)) {
+    return;
+  }
+
+  const currentItem = items.find((item) => item.id === itemId);
+  if (!currentItem) {
+    return;
+  }
+
+  const nextName = window.prompt("Edit item:", currentItem.name);
+  if (nextName === null) {
+    return;
+  }
+
+  const trimmedName = nextName.trim();
+  if (!trimmedName) {
+    return;
+  }
+
+  items = items.map((item) =>
+    item.id === itemId ? { ...item, name: trimmedName } : item
+  );
+  saveItems(items);
+  render();
+}
+
 function handleToggleChange(event) {
   const checkbox = event.target.closest(".complete-checkbox");
   if (!checkbox) {
@@ -130,4 +166,5 @@ render();
 app.addEventListener("submit", handleSubmit);
 app.addEventListener("click", handleDeleteClick);
 app.addEventListener("click", handleDeleteAllClick);
+app.addEventListener("click", handleEditClick);
 app.addEventListener("change", handleToggleChange);

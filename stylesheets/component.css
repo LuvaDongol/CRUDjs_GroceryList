@@ -94,6 +94,11 @@
   gap: 10px;
 }
 
+.item-actions {
+  display: flex;
+  gap: 8px;
+}
+
 .complete-checkbox {
   width: 16px;
   height: 16px;
@@ -117,6 +122,21 @@
 
 .delete-btn:hover {
   background: #dc2626;
+}
+
+.edit-btn {
+  padding: 8px 16px;
+  background: #10b981;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.edit-btn:hover {
+  background: #059669;
 }
 
 .delete-all-btn {
